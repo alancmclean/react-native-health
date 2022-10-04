@@ -91,4 +91,74 @@
     }];
 }
 
+
+ - (void)labTests_getInsulinDeliveryOnDay:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+{
+    NSDate *date = [RCTAppleHealthKit dateFromOptions:input key:@"date" withDefault:[NSDate date]];
+    BOOL includeManuallyAdded = [RCTAppleHealthKit boolFromOptions:input key:@"includeManuallyAdded" withDefault:true];
+
+
+    if(date == nil) {
+        callback(@[RCTMakeError(@"could not parse date from options.date", nil, nil)]);
+        return;
+    }
+
+    HKQuantityType *insulinCountType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierInsulinDelivery];
+    HKUnit *insulinUnit = [HKUnit internationalUnit];
+
+    [self fetchSumOfSamplesOnDayForType:insulinCountType
+                                    unit:insulinUnit
+                                    includeManuallyAdded:includeManuallyAdded
+                                    day:date
+                             completion:^(double value, NSDate *startDate, NSDate *endDate, NSError *error) {
+        if (!value && value != 0) {
+            callback(@[RCTJSErrorFromNSError(error)]);
+            return;
+        }
+
+         NSDictionary *response = @{
+                 @"value" : @(value),
+                 @"startDate" : [RCTAppleHealthKit buildISO8601StringFromDate:startDate],
+                 @"endDate" : [RCTAppleHealthKit buildISO8601StringFromDate:endDate],
+         };
+
+        callback(@[[NSNull null], response]);
+    }];
+}
+
+- (void)labTests_getDailyInsulinDeliverySamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+{
+    HKUnit *unit = [RCTAppleHealthKit hkUnitFromOptions:input key:@"unit" withDefault:[HKUnit internationalUnit]];
+    NSUInteger limit = [RCTAppleHealthKit uintFromOptions:input key:@"limit" withDefault:HKObjectQueryNoLimit];
+    BOOL ascending = [RCTAppleHealthKit boolFromOptions:input key:@"ascending" withDefault:false];
+    NSDate *startDate = [RCTAppleHealthKit dateFromOptions:input key:@"startDate" withDefault:nil];
+    NSDate *endDate = [RCTAppleHealthKit dateFromOptions:input key:@"endDate" withDefault:[NSDate date]];
+    NSUInteger period = [RCTAppleHealthKit uintFromOptions:input key:@"period" withDefault:5];
+    BOOL includeManuallyAdded = [RCTAppleHealthKit boolFromOptions:input key:@"includeManuallyAdded" withDefault:true];
+
+    if(startDate == nil){
+        callback(@[RCTMakeError(@"startDate is required in options", nil, nil)]);
+        return;
+    }
+
+    HKQuantityType *insulinDeliveryCountType = [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierInsulinDelivery];
+
+    [self fetchCumulativeSumStatisticsCollection:insulinDeliveryCountType
+                                            unit:unit
+                                            period:period
+                                       startDate:startDate
+                                         endDate:endDate
+                                       ascending:ascending
+                                           limit:limit
+                                           includeManuallyAdded:includeManuallyAdded
+                                      completion:^(NSArray *arr, NSError *err){
+        if (err != nil) {
+            callback(@[RCTJSErrorFromNSError(err)]);
+            return;
+        }
+        callback(@[[NSNull null], arr]);
+    }];
+}
+
+
 @end

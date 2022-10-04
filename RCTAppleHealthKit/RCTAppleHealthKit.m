@@ -515,6 +515,18 @@ RCT_EXPORT_METHOD(saveBloodAlcoholContent: (NSDictionary *)input callback:(RCTRe
     [self labTests_saveBloodAlcoholContent:input callback:callback];
 }
 
+RCT_EXPORT_METHOD(getInsulinDeliveryOnDay:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+    [self _initializeHealthStore];
+    [self labTests_getInsulinDeliveryOnDay:input callback:callback];
+}
+
+RCT_EXPORT_METHOD(getDailyInsulinDeliverySamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
+{
+    [self _initializeHealthStore];
+    [self labTests_getDailyInsulinDeliverySamples:input callback:callback];
+}
+
 RCT_EXPORT_METHOD(getEnvironmentalAudioExposure: (NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
 {
     [self _initializeHealthStore];

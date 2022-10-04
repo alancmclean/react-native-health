@@ -14,4 +14,9 @@
 - (void)labTests_getLatestBloodAlcoholContent:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
 - (void)labTests_getBloodAlcoholContentSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
 - (void)labTests_saveBloodAlcoholContent:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
+
+- (void)labTests_getInsulinDeliveryOnDay:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
+- (void)labTests_getDailyInsulinDeliverySamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback;
+
+
 @end

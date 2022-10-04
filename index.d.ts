@@ -424,7 +424,16 @@ declare module 'react-native-health' {
       callback: (err: string, results: Array<HealthActivitySummary>) => void,
     ): void
 
-    Constants: Constants
+    getInsulinDeliveryOnDay(
+      options: HealthInputOptions,
+      callback: (err: string, results: Array<HealthValue>) => void,
+    ): void
+
+    getDailyInsulinDeliverySamples(
+      options: HealthInputOptions,
+      callback: (err: string, results: Array<HealthValue>) => void,
+    ): void
+
   }
 
   /* Inputs and Payloads */
@@ -746,7 +755,8 @@ declare module 'react-native-health' {
     WalkingHeartRateAverage = 'WalkingHeartRateAverage',
     Weight = 'Weight',
     Workout = 'Workout',
-    WorkoutRoute = 'WorkoutRoute'
+    WorkoutRoute = 'WorkoutRoute',
+    InsulinDelivery = 'InsulinDelivery'
   }
 
   export enum HealthUnit {

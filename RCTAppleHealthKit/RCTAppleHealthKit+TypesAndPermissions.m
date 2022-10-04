@@ -204,6 +204,8 @@
     // Lab and tests
     if ([@"BloodAlcoholContent" isEqualToString: key]) {
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBloodAlcoholContent];
+    }else if ([@"InsulinDelivery" isEqualToString: key]) {
+        return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierInsulinDelivery];
     }
     
     // Activity Summary
@@ -376,6 +378,10 @@
     // Lab and tests
     if ([@"BloodAlcoholContent" isEqualToString: key]) {
         return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierBloodAlcoholContent];
+    }
+
+    if ([@"InsulinDelivery" isEqualToString: key]) {
+        return [HKObjectType quantityTypeForIdentifier:HKQuantityTypeIdentifierInsulinDelivery];
     }
 
     return nil;

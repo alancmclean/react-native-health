@@ -91,5 +91,6 @@ export const Permissions = {
   WalkingHeartRateAverage: 'WalkingHeartRateAverage',
   Weight: 'Weight',
   Workout: 'Workout',
-  WorkoutRoute: 'WorkoutRoute'
+  WorkoutRoute: 'WorkoutRoute',
+  InsulinDelivery: 'InsulinDelivery'
 }
