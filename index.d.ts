@@ -434,6 +434,7 @@ declare module 'react-native-health' {
       callback: (err: string, results: Array<HealthValue>) => void,
     ): void
 
+
   }
 
   /* Inputs and Payloads */
